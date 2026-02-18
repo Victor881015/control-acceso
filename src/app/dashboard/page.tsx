@@ -181,170 +181,36 @@ export default function DashboardPage() {
 
   // Datos de ejemplo más completos
   useEffect(() => {
-    const registrosEjemplo: RegistroAcceso[] = [
-      {
-        id: '1',
-        nombre: 'Carlos Méndez Ruiz',
-        tipo: 'empleado',
-        documento: '1234567890',
-        empresa: 'TechCorp S.A.S.',
-        estado: 'ingreso',
-        puerta: 'parqueadero',
-        horaIngreso: new Date('2024-02-15T08:30:00'),
-        foto: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Carlos',
-        registradoPor: 'Sistema Biométrico',
-        autorizadoPor: 'RRHH - Ana García',
-        temperatura: 36.5,
-        nivelSeguridad: 'restringido',
-        areaDestino: 'Piso 4 - Desarrollo',
-        elementosIngreso: ['Laptop', 'Celular'],
-        vehiculo: 'Automóvil Chevrolet Spark',
-        placaVehiculo: 'ABC123'
-      },
-      {
-        id: '2',
-        nombre: 'María González Pérez',
-        tipo: 'visitante',
-        documento: '9876543210',
-        empresa: 'Cliente ABC Ltda.',
-        estado: 'ingreso',
-        puerta: 'principal',
-        horaIngreso: new Date('2024-02-15T09:15:00'),
-        foto: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Maria',
-        registradoPor: 'Portería - Juan Pérez',
-        autorizadoPor: 'Gerencia - Roberto Silva',
-        areaDestino: 'Sala de Juntas A',
-        temperatura: 36.2,
-        nivelSeguridad: 'publico',
-        elementosIngreso: ['Portafolio', 'Tablet']
-      },
-      {
-        id: '3',
-        nombre: 'Luis Ramírez Castro',
-        tipo: 'contratista',
-        documento: '5551234567',
-        empresa: 'Mantenimiento XYZ',
-        estado: 'ingreso',
-        puerta: 'carga',
-        horaIngreso: new Date('2024-02-15T08:00:00'),
-        foto: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Luis',
-        registradoPor: 'Portería - Juan Pérez',
-        areaDestino: 'Piso 3 - Mantenimiento',
-        temperatura: 36.8,
-        nivelSeguridad: 'restringido',
-        vehiculo: 'Camioneta Mazda BT-50',
-        placaVehiculo: 'XYZ789',
-        elementosIngreso: ['Herramientas', 'Escalera']
-      },
-      {
-        id: '4',
-        nombre: 'Ana Martínez López',
-        tipo: 'proveedor',
-        documento: '3334445556',
-        empresa: 'Suministros Café del Sur',
-        estado: 'salida',
-        puerta: 'principal',
-        horaIngreso: new Date('2024-02-15T10:00:00'),
-        horaSalida: new Date('2024-02-15T11:45:00'),
-        foto: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Ana',
-        registradoPor: 'Portería - María Torres',
-        autorizadoPor: 'Compras - Diego Morales',
-        temperatura: 36.4,
-        nivelSeguridad: 'publico',
-        areaDestino: 'Cafetería',
-        elementosIngreso: ['Productos']
-      },
-      {
-        id: '5',
-        nombre: 'Roberto Sánchez Vega',
-        tipo: 'empleado',
-        documento: '7778889990',
-        empresa: 'TechCorp S.A.S.',
-        estado: 'ingreso',
-        puerta: 'parqueadero',
-        horaIngreso: new Date('2024-02-15T07:45:00'),
-        foto: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Roberto',
-        registradoPor: 'Sistema Biométrico',
-        temperatura: 36.6,
-        nivelSeguridad: 'confidencial',
-        areaDestino: 'Piso 5 - Gerencia',
-        vehiculo: 'Automóvil Toyota Corolla',
-        placaVehiculo: 'DEF456',
-        elementosIngreso: ['Laptop', 'Documentos']
-      }
-    ];
+  cargarDatos();
+}, []);
 
-    const alarmasEjemplo: Alarma[] = [
-      {
-        id: '1',
-        tipo: 'acceso_denegado',
-        descripcion: 'Intento de acceso con credencial vencida - 3 intentos consecutivos',
-        ubicacion: 'Puerta Principal - Torniquete 2',
-        coordenadas: { lat: 4.6097, lng: -74.0817 },
-        fecha: new Date('2024-02-15T07:45:00'),
-        severidad: 'media',
-        atendida: true,
-        personaInvolucrada: 'Visitante no registrado - Doc: 9998887776',
-        accionTomada: 'Se solicitó actualización de credenciales. Persona escoltada a recepción.',
-        camaraAsociada: 'CAM-001-PRINCIPAL'
-      },
-      {
-        id: '2',
-        tipo: 'puerta_forzada',
-        descripcion: 'Puerta de emergencia abierta sin autorización - Alarma sonora activada',
-        ubicacion: 'Puerta Trasera - Salida Emergencia Piso 3',
-        coordenadas: { lat: 4.6095, lng: -74.0815 },
-        fecha: new Date('2024-02-15T13:20:00'),
-        severidad: 'alta',
-        atendida: false,
-        accionTomada: '',
-        camaraAsociada: 'CAM-012-EMERGENCIA-P3'
-      },
-      {
-        id: '3',
-        tipo: 'temperatura_alta',
-        descripcion: 'Persona con temperatura corporal elevada detectada (38.2°C) - Protocolo de salud activado',
-        ubicacion: 'Entrada Principal - Punto Control Sanitario',
-        coordenadas: { lat: 4.6098, lng: -74.0816 },
-        fecha: new Date('2024-02-15T14:00:00'),
-        severidad: 'alta',
-        atendida: false,
-        personaInvolucrada: 'Visitante externo - Doc: 1112223334',
-        accionTomada: '',
-        camaraAsociada: 'CAM-002-CONTROL-TEMP'
-      },
-      {
-        id: '4',
-        tipo: 'tiempo_excedido',
-        descripcion: 'Visitante excedió tiempo autorizado en zona restringida (Autorizado: 1 hora / Permanencia: 2.5 horas)',
-        ubicacion: 'Zona Administrativa - Piso 2 - Sala Servidores',
-        coordenadas: { lat: 4.6096, lng: -74.0818 },
-        fecha: new Date('2024-02-15T15:30:00'),
-        severidad: 'media',
-        atendida: false,
-        personaInvolucrada: 'Técnico Externo - Juan Rodríguez',
-        accionTomada: '',
-        camaraAsociada: 'CAM-008-SERVIDORES-P2'
-      },
-      {
-        id: '5',
-        tipo: 'intrusion',
-        descripcion: 'Movimiento detectado en área restringida fuera de horario autorizado',
-        ubicacion: 'Bodega Principal - Zona de Almacenamiento',
-        coordenadas: { lat: 4.6094, lng: -74.0819 },
-        fecha: new Date('2024-02-15T22:45:00'),
-        severidad: 'critica',
-        atendida: false,
-        personaInvolucrada: 'Persona no identificada',
-        accionTomada: '',
-        camaraAsociada: 'CAM-015-BODEGA'
-      }
-    ];
+// Función para cargar datos desde MongoDB
+const cargarDatos = async () => {
+  try {
+    // Cargar registros
+    const resRegistros = await fetch('/api/registros');
+    const dataRegistros = await resRegistros.json();
+    setRegistros(dataRegistros.map((r: any) => ({
+      ...r,
+      id: r._id,
+      horaIngreso: r.horaIngreso ? new Date(r.horaIngreso) : undefined,
+      horaSalida: r.horaSalida ? new Date(r.horaSalida) : undefined
+    })));
 
-    setRegistros(registrosEjemplo);
-    setAlarmas(alarmasEjemplo);
-  }, []);
+    // Cargar alarmas
+    const resAlarmas = await fetch('/api/alarmas');
+    const dataAlarmas = await resAlarmas.json();
+    setAlarmas(dataAlarmas.map((a: any) => ({
+      ...a,
+      id: a._id,
+      fecha: new Date(a.fecha)
+    })));
+  } catch (error) {
+    console.error('Error al cargar datos:', error);
+  }
+};
 
+   
   // Estadísticas detalladas
   const stats = {
     enInstalaciones: registros.filter(r => r.estado === 'ingreso').length,
@@ -381,66 +247,112 @@ export default function DashboardPage() {
     setNuevoRegistro(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmitRegistro = (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    const nuevoAcceso: RegistroAcceso = {
-      id: Date.now().toString(),
-      nombre: nuevoRegistro.nombre,
-      documento: nuevoRegistro.documento,
-      tipo: nuevoRegistro.tipo,
-      empresa: nuevoRegistro.empresa,
-      estado: 'ingreso',
-      puerta: nuevoRegistro.puerta,
-      horaIngreso: new Date(),
-      foto: `https://api.dicebear.com/7.x/avataaars/svg?seed=${nuevoRegistro.nombre}`,
-      registradoPor: 'Portería - Control Manual',
-      autorizadoPor: nuevoRegistro.autorizadoPor,
-      areaDestino: nuevoRegistro.areaDestino,
-      observaciones: nuevoRegistro.observaciones,
-      temperatura: parseFloat(nuevoRegistro.temperatura) || 36.5,
-      nivelSeguridad: nuevoRegistro.nivelSeguridad,
-      vehiculo: nuevoRegistro.vehiculo || undefined,
-      placaVehiculo: nuevoRegistro.placaVehiculo || undefined,
-      elementosIngreso: nuevoRegistro.elementosIngreso ? nuevoRegistro.elementosIngreso.split(',').map(e => e.trim()) : []
-    };
-
-    setRegistros([nuevoAcceso, ...registros]);
-    
-    // Limpiar formulario
-    setNuevoRegistro({
-      nombre: '',
-      documento: '',
-      tipo: 'visitante',
-      empresa: '',
-      areaDestino: '',
-      autorizadoPor: '',
-      observaciones: '',
-      temperatura: '',
-      nivelSeguridad: 'publico',
-      vehiculo: '',
-      placaVehiculo: '',
-      elementosIngreso: '',
-      puerta: 'principal'
+  const handleSubmitRegistro = async (e: React.FormEvent) => {
+  e.preventDefault();
+  
+  try {
+    const response = await fetch('/api/registros', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        nombre: nuevoRegistro.nombre,
+        documento: nuevoRegistro.documento,
+        tipo: nuevoRegistro.tipo,
+        empresa: nuevoRegistro.empresa,
+        estado: 'ingreso',
+        puerta: nuevoRegistro.puerta,
+        foto: `https://api.dicebear.com/7.x/avataaars/svg?seed=${nuevoRegistro.nombre}`,
+        registradoPor: 'Portería - Control Manual',
+        autorizadoPor: nuevoRegistro.autorizadoPor,
+        areaDestino: nuevoRegistro.areaDestino,
+        observaciones: nuevoRegistro.observaciones,
+        temperatura: parseFloat(nuevoRegistro.temperatura) || 36.5,
+        nivelSeguridad: nuevoRegistro.nivelSeguridad,
+        vehiculo: nuevoRegistro.vehiculo || undefined,
+        placaVehiculo: nuevoRegistro.placaVehiculo || undefined,
+        elementosIngreso: nuevoRegistro.elementosIngreso 
+          ? nuevoRegistro.elementosIngreso.split(',').map(e => e.trim()) 
+          : []
+      }),
     });
 
-    alert('✅ Registro de ingreso creado exitosamente');
-  };
+    if (response.ok) {
+      // Recargar datos
+      await cargarDatos();
+      
+      // Limpiar formulario
+      setNuevoRegistro({
+        nombre: '',
+        documento: '',
+        tipo: 'visitante',
+        empresa: '',
+        areaDestino: '',
+        autorizadoPor: '',
+        observaciones: '',
+        temperatura: '',
+        nivelSeguridad: 'publico',
+        vehiculo: '',
+        placaVehiculo: '',
+        elementosIngreso: '',
+        puerta: 'principal'
+      });
 
-  const registrarSalida = (id: string) => {
-    setRegistros(registros.map(r => 
-      r.id === id ? { ...r, estado: 'salida' as EstadoAcceso, horaSalida: new Date() } : r
-    ));
-  };
-
-  const atenderAlarma = (id: string) => {
-    const accion = prompt('Ingrese la acción tomada para resolver esta alarma:');
-    if (accion) {
-      setAlarmas(alarmas.map(a => 
-        a.id === id ? { ...a, atendida: true, accionTomada: accion } : a
-      ));
+      alert('✅ Registro de ingreso creado exitosamente');
+      setSeccionActiva('dashboard');
+    } else {
+      alert('❌ Error al crear el registro');
     }
-  };
+  } catch (error) {
+    console.error('Error:', error);
+    alert('❌ Error de conexión');
+  }
+};
+  const registrarSalida = async (id: string) => {
+  try {
+    const response = await fetch(`/api/registros/${id}/salida`, {
+      method: 'PATCH',
+    });
+
+    if (response.ok) {
+      // Recargar datos
+      await cargarDatos();
+      alert('✅ Salida registrada exitosamente');
+    } else {
+      alert('❌ Error al registrar salida');
+    }
+  } catch (error) {
+    console.error('Error:', error);
+    alert('❌ Error de conexión');
+  }
+};
+
+  const atenderAlarma = async (id: string) => {
+  const accion = prompt('Ingrese la acción tomada para resolver esta alarma:');
+  if (accion) {
+    try {
+      const response = await fetch(`/api/alarmas/${id}/atender`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ accionTomada: accion }),
+      });
+
+      if (response.ok) {
+        // Recargar datos
+        await cargarDatos();
+        alert('✅ Alarma atendida exitosamente');
+      } else {
+        alert('❌ Error al atender alarma');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      alert('❌ Error de conexión');
+    }
+  }
+};
 
   const exportarDatos = () => {
     const csv = registrosFiltrados.map(r => 
